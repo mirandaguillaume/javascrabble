@@ -32,13 +32,16 @@ public class Node {
 	{
 		Node n = null;
 		try
-		{	
-			if (i<children.length) 
+		{	 
 				n=children[i];
 		}
 		catch(NullPointerException ex)
 		{
-			n=new Node("!");
+			n=new Node("\0");
+		}
+		catch (ArrayIndexOutOfBoundsException e)
+		{
+			n = new Node("\0");
 		}
 		return n;
 	}
@@ -68,7 +71,11 @@ public class Node {
 		
 	public String toString()
 	{
-		return mot+" Nb: "+children.length;
+		int nb;
+		try { nb = children.length; }
+		catch (NullPointerException e)
+		{ nb = 0; }
+		return mot+" Nb: "+nb;
 	}
 	/**
 	 * @param args
@@ -80,7 +87,7 @@ public class Node {
 		n.addChild("c");
 		System.out.println(n);
 		System.out.println(m);
-		System.out.println(n.getChild(2));
+		System.out.println(n.getChild(1));
 	}
 
 }

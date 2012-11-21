@@ -24,7 +24,7 @@ public class Tree {
 		Node tmp=root;
 		for (int i=0;i<s.length();i++)
 			{
-			int n=tmp.searchChild(s.charAt(i));
+			int n=tmp.searchChild(s.substring(0, i));
 			tmp=tmp.getChild(n);
 			
 			}
@@ -32,7 +32,7 @@ public class Tree {
 	
 	public Tree() {
 		super();
-		tree = new Node("\0");
+		root = new Node("\0");
 	}
 
 }

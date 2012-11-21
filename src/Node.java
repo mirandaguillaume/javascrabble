@@ -2,59 +2,85 @@
 public class Node {
 
 	//Attributes
-	private char c;
+	private String mot;
 	private Node [] children;
 	
 	//Constructor
-	public Node(char c) {
-		children = new Node[27];
-		System.out.println("Je construit le noeud"); this.c=c;
+	public Node(String s) {
+		System.out.println("Je construit le noeud"); this.mot=s;
 			}
 	
 	//Methods
-	public char getC() {return c;}
+	public String getMot() {return mot;}
+	
+	public int searchChild(String s)
+	{
+		int ind = -1;
+		boolean find = false;
+		for (int i=0;(i<children.length) && !find;i++)
+		{
+			if(children[i].getMot()==s)
+			{
+				ind = i;
+				find = true;
+			}
+		}
+		return ind;
+	}
 	
 	public Node getChild(int i)
 	{
-		if (i<children.length) return children[i];
-		return new Node('!');
+		Node n = null;
+		try
+		{	
+			if (i<children.length) 
+				n=children[i];
+		}
+		catch(NullPointerException ex)
+		{
+			n=new Node("!");
+		}
+		return n;
 	}
 	
-	public void addChild(char c)
+	public int addChild(String s)
 	{
-		int n;
+		Node [] aux;
+		int ind;
 		System.out.println("J'affiche le nombre d'enfants");
-		try{n=children.length;}
-		catch(NullPointerException ex)
-		{n=0;}
-		if (n<=27)
+		try
 		{
-			System.out.println("Je vais le rajouter");
-			children[n-1]=new Node(c);
-			System.out.println("Ajouté");
+			aux = new Node[children.length+1];
+			for (int i=0;i<children.length;i++)
+				aux[i]=children[i];
+			aux[children.length]=new Node(s);
+			ind=children.length;
 		}
+		catch(NullPointerException ex)
+		{
+			aux=new Node[1];
+			aux[0]=new Node(s);
+			ind=0;
+		}
+		children=aux;
+		return ind;
 	}
 		
 	public String toString()
 	{
-		return Character.toString(c)+" Nb: "+children.length;
+		return mot+" Nb: "+children.length;
 	}
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		Node n,m;
-		n= new Node('a');
-		m= new Node('b');
-		n.addChild('c');
+		n= new Node("a");
+		m= new Node("b");
+		n.addChild("c");
 		System.out.println(n);
 		System.out.println(m);
-		System.out.println(n.getNext(26));
-	}
-
-	public int searchChild(char charAt) {
-		// TODO Auto-generated method stub
-		return 0;
+		System.out.println(n.getChild(2));
 	}
 
 }

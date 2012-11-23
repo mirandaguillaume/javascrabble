@@ -1,24 +1,24 @@
 /**
- * 
- */
-
-/**
+ * Implémente l'arbre représentant le dictionnaire
  * @author Guillaume
  *
  */
 public class Tree {
 
-	private Node root;
-	/**
-	 * @param args
+	/** 
+	 * Attribut qui contient la racine de l'arbre
 	 */
-	
+	private Node root;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 	}
 	
+	/**
+	 * Sert à ajouter un mot dans l'arbre
+	 * @param s Le mot à ajouter
+	 */
 	public void addMot(String s)
 	{
 		Node tmp=root;
@@ -30,6 +30,10 @@ public class Tree {
 			}
 	}
 	
+	/**
+	 * Constructeur de la classe
+	 * Crée un noeud contenant le caractère vide pour la racine
+	 */
 	public Tree() {
 		super();
 		root = new Node("\0");

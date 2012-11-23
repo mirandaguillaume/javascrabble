@@ -1,18 +1,35 @@
-
+/**
+ * Implémente le noeud de l'arbre du dictionnaire
+ * @author guillaume
+ *
+ */
 public class Node {
 
-	//Attributes
+	/** 
+	 * Est le mot contenu dans le noeud
+	 */
 	private String mot;
+	
+	/**
+	 *  Contient tous les fils du noeud courant
+	 */
 	private Node [] children;
 	
-	//Constructor
+	/** Constructeur du noeud 
+	 * 
+	 * @param s mot à mettre dans le noeud
+	 */
 	public Node(String s) {
 		System.out.println("Je construit le noeud"); this.mot=s;
 			}
 	
-	//Methods
 	public String getMot() {return mot;}
 	
+	/** 
+	 * Recherche un fils avec le mot s à l'intérieur
+	 * @param s Le mot à rechercher
+	 * @return Retourne l'indice du noeud contenant le mot
+	 */
 	public int searchChild(String s)
 	{
 		int ind = -1;
@@ -28,6 +45,11 @@ public class Node {
 		return ind;
 	}
 	
+	/** 
+	 * Renvoie le fils associé à la case i
+	 * @param i Le numéro du fils voulu 
+	 * @return Le fils i du noeud courant
+	 */
 	public Node getChild(int i)
 	{
 		Node n = null;
@@ -35,17 +57,18 @@ public class Node {
 		{	 
 				n=children[i];
 		}
-		catch(NullPointerException ex)
+		catch(NullPointerException | ArrayIndexOutOfBoundsException e)
 		{
 			n=new Node("\0");
-		}
-		catch (ArrayIndexOutOfBoundsException e)
-		{
-			n = new Node("\0");
 		}
 		return n;
 	}
 	
+	/**
+	 *  Ajoute un mot en fils
+	 * @param s Mot à ajouter
+	 * @return Indice du fils ajouté
+	 */
 	public int addChild(String s)
 	{
 		Node [] aux;
@@ -69,6 +92,9 @@ public class Node {
 		return ind;
 	}
 		
+	/**
+	 * Override the toString method
+	 */
 	public String toString()
 	{
 		int nb;

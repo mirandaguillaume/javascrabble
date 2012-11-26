@@ -12,7 +12,9 @@ public class Tree {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		Tree a=new Tree();
+		a.addMot("a");
+		a.addMot("b");
 	}
 	
 	/**
@@ -22,14 +24,20 @@ public class Tree {
 	public void addMot(String s)
 	{
 		Node tmp=root;
+		int n;
 		for (int i=0;i<s.length();i++)
 			{
-			int n=tmp.searchChild(s.substring(0, i));
+			if ((n=tmp.searchChild(s.substring(0, i))) == -1)
+				n=tmp.addChild(s);
 			tmp=tmp.getChild(n);
-			
 			}
 	}
 	
+	@Override
+	public String toString() {
+		return "Tree [root=" + root.toString() + "]";
+	}
+
 	/**
 	 * Constructeur de la classe
 	 * Crée un noeud contenant le caractère vide pour la racine

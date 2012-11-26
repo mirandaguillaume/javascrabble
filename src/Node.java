@@ -9,22 +9,22 @@ public class Node {
 	 * Est le mot contenu dans le noeud
 	 */
 	private String mot;
-	
+
 	/**
 	 *  Contient tous les fils du noeud courant
 	 */
 	private Node [] children;
-	
+
 	/** Constructeur du noeud 
 	 * 
 	 * @param s mot à mettre dans le noeud
 	 */
 	public Node(String s) {
 		System.out.println("Je construit le noeud"); this.mot=s;
-			}
-	
+	}
+
 	public String getMot() {return mot;}
-	
+
 	/** 
 	 * Recherche un fils avec le mot s à l'intérieur
 	 * @param s Le mot à rechercher
@@ -34,17 +34,21 @@ public class Node {
 	{
 		int ind = -1;
 		boolean find = false;
-		for (int i=0;(i<children.length) && !find;i++)
-		{
-			if(children[i].getMot()==s)
+		try {
+			for (int i=0;(i<children.length) && !find;i++)
 			{
-				ind = i;
-				find = true;
+				if(children[i].getMot()==s)
+				{
+					ind = i;
+					find = true;
+				}
 			}
 		}
+		catch (NullPointerException e)
+		{ind=-1;}
 		return ind;
 	}
-	
+
 	/** 
 	 * Renvoie le fils associé à la case i
 	 * @param i Le numéro du fils voulu 
@@ -55,7 +59,7 @@ public class Node {
 		Node n = null;
 		try
 		{	 
-				n=children[i];
+			n=children[i];
 		}
 		catch(NullPointerException | ArrayIndexOutOfBoundsException e)
 		{
@@ -63,13 +67,13 @@ public class Node {
 		}
 		return n;
 	}
-	
+
 	/**
 	 *  Ajoute un mot en fils
 	 * @param s Mot à ajouter
 	 * @return Indice du fils ajouté
 	 */
-	public int addChild(String s)
+	public synchronized int addChild(String s)
 	{
 		Node [] aux;
 		int ind;
@@ -91,17 +95,20 @@ public class Node {
 		children=aux;
 		return ind;
 	}
-		
+
 	/**
 	 * Override the toString method
 	 */
 	public String toString()
 	{
+		String rep=mot;
 		int nb;
 		try { nb = children.length; }
 		catch (NullPointerException e)
 		{ nb = 0; }
-		return mot+" Nb: "+nb;
+		for (int i=0;i<nb;i++)
+			mot+=" Fils n°"+Integer.toString(i)+":"+children[i].toString();
+		return rep;
 	}
 	/**
 	 * @param args

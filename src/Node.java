@@ -20,7 +20,8 @@ public class Node {
 	 * @param s mot à mettre dans le noeud
 	 */
 	public Node(String s) {
-		System.out.println("Je construit le noeud"); this.mot=s;
+		this.mot=s;
+		this.children = null;
 	}
 
 	public String getMot() {return mot;}
@@ -77,7 +78,6 @@ public class Node {
 	{
 		Node [] aux;
 		int ind;
-		System.out.println("J'affiche le nombre d'enfants");
 		try
 		{
 			aux = new Node[children.length+1];

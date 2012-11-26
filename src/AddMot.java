@@ -1,7 +1,7 @@
 /**
  * Classe servant à faire l'ajout threadé de mot dans l'arbre à partir du dictionnaire
  * @author guillaume
- *
+ * @version 1.0
  */
 public class AddMot implements Runnable {
 

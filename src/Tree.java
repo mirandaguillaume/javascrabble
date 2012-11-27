@@ -1,7 +1,7 @@
 /**
  * Implémente l'arbre représentant le dictionnaire
  * @author Guillaume
- *
+ * @version 0.5
  */
 public class Tree {
 

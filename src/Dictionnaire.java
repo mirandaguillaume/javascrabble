@@ -5,15 +5,15 @@ import java.util.Scanner;
 /**
  * Classe du dictionnaire de mots du jeu de scrabble
  * @author guillaume
- * @version 0.1
+ * @version 1.0
  */
 public class Dictionnaire {
 
 	/** La variable qui contient le pointeur vers l'arbre modélisant le dictionnaire */
 	private Tree liste;
 	/** Variables constantes qui contiennent le chemin relatif vers les dictionnaires */ 
-	final String dicoFR = "../dico_francais.txt";
-	final String dicoEN = "../english_dict.txt";
+	final String dicoFR = "dico_francais.txt";
+	final String dicoEN = "english_dict.txt";
 
 	/** Variable qui contient la langue utilisée */
 	public Lang actuelle;

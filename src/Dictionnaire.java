@@ -65,12 +65,10 @@ public class Dictionnaire {
 	private void ReadDico(Scanner opened) {
 		// TODO Auto-generated method stub
 		String ligne = null;
-		Thread t = null;
 		while (opened.hasNextLine())
 			ligne=opened.nextLine();
 			if (ligne != null) {  
-				t=new Thread( new AddMot(liste,ligne));
-				t.start();
+				liste.addMot(ligne);
 			} 
 	}
 

@@ -66,10 +66,12 @@ public class Dictionnaire {
 		// TODO Auto-generated method stub
 		String ligne = null;
 		while (opened.hasNextLine())
+		{
 			ligne=opened.nextLine();
-		if (ligne != null) {  
-			liste.addMot(ligne);
-		} 
+			if (ligne != null) {  
+				liste.addMot(ligne);
+			}
+		}
 	}
 
 	public void searchMot(String [] s, Boolean [] b)
@@ -95,7 +97,7 @@ public class Dictionnaire {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Dictionnaire d = new Dictionnaire(Lang.FR);
-		Dictionnaire d2 = new Dictionnaire(Lang.EN);
+		// d2 = new Dictionnaire(Lang.EN);
 		Boolean [] b = {new Boolean(false),new Boolean(false)};
 		String tab [] = {"abaisser","Zimbabwe"};
 		d.searchMot(tab,b);

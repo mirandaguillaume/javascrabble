@@ -27,8 +27,9 @@ public class Tree {
 		int n;
 		for (int i=0;i<s.length();i++)
 			{
-			if ((n=tmp.searchChild(s.substring(0, i))) == -1)
-				n=tmp.addChild(s);
+			n=tmp.searchChild(s.substring(0, i+1));
+			if (n == -1)
+				n=tmp.addChild(s.substring(0,i+1));
 			tmp=tmp.getChild(n);
 			}
 	}
@@ -38,18 +39,15 @@ public class Tree {
 		Node tmp=root;
 		int n;
 		boolean find=true;
+		String sub = null;
 		for (int i=0;(i<mot.length()) && find;i++)
 		{
-			if ((n=tmp.searchChild(mot.substring(0,i))) != -1)
+			sub = mot.substring(0,i+1);
+			if ((n=tmp.searchChild(sub)) != -1)
 				tmp=tmp.getChild(n);
 			else find=false;
 		}
 		return find;
-	}
-	
-	@Override
-	public String toString() {
-		return "Tree [root=" + root.toString() + "]";
 	}
 
 	/**

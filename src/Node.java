@@ -38,7 +38,7 @@ public class Node {
 		try {
 			for (int i=0;(i<children.length) && !find;i++)
 			{
-				if(children[i].getMot()==s)
+				if(children[i].getMot().equals(s))
 				{
 					ind = i;
 					find = true;
@@ -74,7 +74,7 @@ public class Node {
 	 * @param s Mot à ajouter
 	 * @return Indice du fils ajouté
 	 */
-	public synchronized int addChild(String s)
+	public int addChild(String s)
 	{
 		Node [] aux;
 		int ind;

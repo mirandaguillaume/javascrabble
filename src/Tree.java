@@ -33,6 +33,20 @@ public class Tree {
 			}
 	}
 	
+	public boolean searchMot(String mot)
+	{
+		Node tmp=root;
+		int n;
+		boolean find=true;
+		for (int i=0;(i<mot.length()) && find;i++)
+		{
+			if ((n=tmp.searchChild(mot.substring(0,i))) != -1)
+				tmp=tmp.getChild(n);
+			else find=false;
+		}
+		return find;
+	}
+	
 	@Override
 	public String toString() {
 		return "Tree [root=" + root.toString() + "]";

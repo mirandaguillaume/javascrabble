@@ -67,9 +67,26 @@ public class Dictionnaire {
 		String ligne = null;
 		while (opened.hasNextLine())
 			ligne=opened.nextLine();
-			if (ligne != null) {  
-				liste.addMot(ligne);
-			} 
+		if (ligne != null) {  
+			liste.addMot(ligne);
+		} 
+	}
+
+	public void searchMot(String [] s, Boolean [] b)
+	{
+		Thread [] t = new Thread [s.length];
+		for (int i=0;i<s.length;i++)
+		{
+			t[i] = new Thread (new SearchMot(liste,s[i],b[i]));
+			t[i].start();
+		}
+		try {
+			for (int i=0;i<t.length;i++)
+				t[i].join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -79,6 +96,10 @@ public class Dictionnaire {
 		// TODO Auto-generated method stub
 		Dictionnaire d = new Dictionnaire(Lang.FR);
 		Dictionnaire d2 = new Dictionnaire(Lang.EN);
+		Boolean [] b = {new Boolean(false),new Boolean(false)};
+		String tab [] = {"abaisser","Zimbabwe"};
+		d.searchMot(tab,b);
+		b.toString();
 	}
 
 }

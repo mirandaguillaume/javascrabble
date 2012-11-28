@@ -69,7 +69,7 @@ public class Dictionnaire {
 		{
 			ligne=opened.nextLine();
 			if (ligne != null) {  
-				liste.addMot(ligne);
+				liste.addMot(ligne.toLowerCase());
 			}
 		}
 	}

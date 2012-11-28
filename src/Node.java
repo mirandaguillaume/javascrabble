@@ -95,21 +95,15 @@ public class Node {
 		children=aux;
 		return ind;
 	}
-
+	
 	/**
-	 * Override the toString method
-	 */
-	public String toString()
-	{
-		String rep=mot;
-		int nb;
-		try { nb = children.length; }
-		catch (NullPointerException e)
-		{ nb = 0; }
-		for (int i=0;i<nb;i++)
-			mot+=" Fils n°"+Integer.toString(i)+":"+children[i].toString();
-		return rep;
+	 * @see java.lang.Object#toString()
+	 **/
+	@Override
+	public String toString() {
+		return "Node [mot=" + mot + "]";
 	}
+
 	/**
 	 * @param args
 	 */

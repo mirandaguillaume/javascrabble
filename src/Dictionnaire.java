@@ -52,7 +52,6 @@ public class Dictionnaire {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		ReadDico(Opened);
 
 		Opened.close();
@@ -97,9 +96,9 @@ public class Dictionnaire {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Dictionnaire d = new Dictionnaire(Lang.FR);
-		// d2 = new Dictionnaire(Lang.EN);
+		Dictionnaire d2 = new Dictionnaire(Lang.EN);
 		Boolean [] b = {new Boolean(false),new Boolean(false)};
-		String tab [] = {"abaisser","Zimbabwe"};
+		String tab [] = {"abaisser","zimbabwe"};
 		d.searchMot(tab,b);
 		b.toString();
 	}

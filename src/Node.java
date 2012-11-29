@@ -15,6 +15,7 @@ public class Node {
 	 */
 	private Node [] children;
 
+	private boolean ok;
 	/** Constructeur du noeud 
 	 * 
 	 * @param s mot à mettre dans le noeud
@@ -24,6 +25,19 @@ public class Node {
 		this.children = null;
 	}
 
+	public void setIsMot(boolean ok) {this.ok=ok;}
+	
+	public boolean IsMot() {return ok;}
+	
+	public int getNbChildren()
+	{
+		try {
+			return children.length;
+		} catch (NullPointerException e) {
+			return 0;
+		}
+	}
+	
 	public String getMot() {return mot;}
 
 	/** 

@@ -1,3 +1,5 @@
+package Principale;
+
 /**
  * Implémente l'arbre représentant le dictionnaire
  * @author Guillaume
@@ -57,6 +59,11 @@ public class Tree {
 	public Tree() {
 		super();
 		root = new Node("\0");
+	}
+
+	public Node getRoot() {
+		// TODO Auto-generated method stub
+		return root;
 	}
 
 }

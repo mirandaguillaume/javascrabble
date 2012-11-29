@@ -1,3 +1,4 @@
+package Principale;
 /** 
  * Classe pour permettre de wrapper un booleen
  * @author guillaume

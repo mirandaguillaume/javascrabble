@@ -1,3 +1,4 @@
+package Principale;
 /**
  * Implémente le noeud de l'arbre du dictionnaire
  * @author guillaume
@@ -104,6 +105,14 @@ public class Node {
 		return "Node [mot=" + mot + "]";
 	}
 
+	public int getNbChildren() {
+		try {
+		return children.length;
+		} catch (NullPointerException e) {
+			return 0;
+		}
+	}
+	
 	/**
 	 * @param args
 	 */

@@ -1,3 +1,5 @@
+package Principale;
+
 /**
  * Classe pour la recherche threadée d'un mot dans le dictionnaire
  * @author guillaume

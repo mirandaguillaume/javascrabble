@@ -1,6 +1,11 @@
+package Principale;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.regex.*;
+
+
 
 /**
  * Classe du dictionnaire de mots du jeu de scrabble
@@ -14,6 +19,9 @@ public class Dictionnaire {
 	/** Variables constantes qui contiennent le chemin relatif vers les dictionnaires */ 
 	final String dicoFR = "dico_francais.txt";
 	final String dicoEN = "english_dict.txt";
+
+	private Pattern p;
+	private Matcher m;
 
 	/** Variable qui contient la langue utilisée */
 	public Lang actuelle;
@@ -64,13 +72,61 @@ public class Dictionnaire {
 	private void ReadDico(Scanner opened) {
 		// TODO Auto-generated method stub
 		String ligne = null;
+		int deb;
 		while (opened.hasNextLine())
 		{
 			ligne=opened.nextLine();
-			if (ligne != null) {  
+			p = Pattern.compile("[^a-z]");
+			m=p.matcher(ligne.toLowerCase());
+			if (m.find())
+			{
+				String modifiee = null;
+				char exception = m.group(0).charAt(0);
+				int exception_int = (int) exception;
+				deb = m.start(0);
+				modifiee=ligne.substring(0,deb);
+				modifiee+=normalise(exception_int);
+				if (deb+1!=ligne.length())
+					modifiee+=ligne.substring(deb+1);
+				ligne=modifiee;
+			}
+			if (ligne != null) {
 				liste.addMot(ligne.toLowerCase());
 			}
 		}
+	}
+
+	private String normalise(int exception_int) {
+		// TODO Auto-generated method stub
+		String mot = Character.toString((char)exception_int);
+		Pattern p=Pattern.compile("[à-ÿ]");
+		Matcher m=p.matcher(mot);
+		String s="";
+		if (m.find())
+		{
+			if ((exception_int>=(int)'à') && (exception_int<=(int)'å'))
+				s="a";
+			else if ((exception_int>=(int)'è') && (exception_int<=(int)'ë'))
+				s="e";
+			else if (exception_int==(int)'ç')
+				s="c";
+			else if (exception_int==(int)'æ')
+				s="ae";
+			else if (exception_int==156)
+				s="oe";
+			else if ((exception_int<=(int)'ì') && (exception_int<=(int)'ï'))
+				s="i";
+			else if ((exception_int<=(int)'ò') && (exception_int<=(int)'ö'))
+				s="o";
+			else if (exception_int==(int)'ñ')
+				s="n";
+			else if ((exception_int<=(int)'ù') && (exception_int<=(int)'ü'))
+				s="u";
+			else if ((exception_int==(int)'ý') && (exception_int==(int)'ÿ'))
+				s="y";
+		}
+		return s;
+
 	}
 
 	public void searchMot(String [] s, Boolean [] b)
@@ -90,16 +146,30 @@ public class Dictionnaire {
 		}
 	}
 
+	public void calcVal (Sac s) throws InterruptedException
+	{
+		Thread t = new Thread ( new CalcVal(liste.getRoot(),s,0));
+		t.start();
+		t.join();
+	}
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Dictionnaire d = new Dictionnaire(Lang.FR);
-		Dictionnaire d2 = new Dictionnaire(Lang.EN);
 		Boolean [] b = {new Boolean(false),new Boolean(false)};
-		String tab [] = {"abaisser","zimbabwe"};
+		String tab [] = {"assez","zimbabwe"};
 		d.searchMot(tab,b);
+		//d2.searchMot(tab, b2);
+		Sac s=new Sac();
+		try {
+			d.calcVal(s);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		b.toString();
 	}
 

@@ -18,6 +18,7 @@ public class Node {
 	
 	private boolean isMot;
 
+	private boolean ok;
 	/** Constructeur du noeud 
 	 * 
 	 * @param s mot à mettre dans le noeud
@@ -28,10 +29,18 @@ public class Node {
 		isMot=false;
 	}
 
-	public boolean getIsMot() {return isMot;}
-	
 	public void setIsMot(boolean b){isMot=b;}
 	
+	public boolean getIsMot() {return ok;}
+	
+	public int getNbChildren()
+	{
+		try {
+			return children.length;
+		} catch (NullPointerException e) {
+			return 0;
+		}
+	}
 	
 	public String getMot() {return mot;}
 
@@ -111,14 +120,6 @@ public class Node {
 	@Override
 	public String toString() {
 		return "Node [mot=" + mot + "]";
-	}
-
-	public int getNbChildren() {
-		try {
-		return children.length;
-		} catch (NullPointerException e) {
-			return 0;
-		}
 	}
 	
 	/**

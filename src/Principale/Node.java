@@ -15,6 +15,8 @@ public class Node {
 	 *  Contient tous les fils du noeud courant
 	 */
 	private Node [] children;
+	
+	private boolean isMot;
 
 	/** Constructeur du noeud 
 	 * 
@@ -23,8 +25,14 @@ public class Node {
 	public Node(String s) {
 		this.mot=s;
 		this.children = null;
+		isMot=false;
 	}
 
+	public boolean getIsMot() {return isMot;}
+	
+	public void setIsMot(boolean b){isMot=b;}
+	
+	
 	public String getMot() {return mot;}
 
 	/** 

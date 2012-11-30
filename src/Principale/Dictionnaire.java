@@ -148,9 +148,8 @@ public class Dictionnaire {
 
 	public void calcVal (Sac s) throws InterruptedException
 	{
-		Thread t = new Thread ( new CalcVal(liste.getRoot(),s,0));
-		t.start();
-		t.join();
+		CalcVal t = new CalcVal(liste.getRoot(),s,0);
+		t.run();
 	}
 	
 	/**

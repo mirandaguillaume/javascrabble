@@ -34,6 +34,7 @@ public class Tree {
 				n=tmp.addChild(s.substring(0,i+1));
 			tmp=tmp.getChild(n);
 			}
+		tmp.setIsMot(true);
 	}
 	
 	public boolean searchMot(String mot)

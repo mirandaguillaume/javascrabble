@@ -20,9 +20,9 @@ public class Sac {
 		for (int i=0;i<26;i++)
 			Sac[i].add(other.Sac[i]);
 	}
-	
-	public void add(char c,int occurrence)
+
+	public void add(char c,int occurrence) throws NullPointerException
 	{
-		Sac[((int)c)-97].add(occurrence);
+			Sac[((int)c)-97].add(occurrence);
 	}
 }

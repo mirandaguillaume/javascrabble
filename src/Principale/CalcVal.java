@@ -22,7 +22,6 @@ public class CalcVal {
 		this.s=s;
 	}
 
-	
 	public void run() {
 		// TODO Auto-generated method stub
 		CalcVal [] t = new CalcVal [n.getNbChildren()];

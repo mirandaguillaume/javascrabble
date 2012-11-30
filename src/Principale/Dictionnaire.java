@@ -157,14 +157,15 @@ public class Dictionnaire {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Dictionnaire d = new Dictionnaire(Lang.FR);
+		//Dictionnaire d = new Dictionnaire(Lang.FR);
+		Dictionnaire d2 = new Dictionnaire(Lang.EN);
 		Boolean [] b = {new Boolean(false),new Boolean(false)};
 		String tab [] = {"assez","zimbabwe"};
-		d.searchMot(tab,b);
+		//d.searchMot(tab,b);
 		//d2.searchMot(tab, b2);
 		Sac s=new Sac();
 		try {
-			d.calcVal(s);
+			d2.calcVal(s);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.regex.*;
 
-
-
 /**
  * Classe du dictionnaire de mots du jeu de scrabble
  * @author guillaume
@@ -19,9 +17,6 @@ public class Dictionnaire {
 	/** Variables constantes qui contiennent le chemin relatif vers les dictionnaires */ 
 	final String dicoFR = "dico_francais.txt";
 	final String dicoEN = "english_dict.txt";
-
-	private Pattern p;
-	private Matcher m;
 
 	/** Variable qui contient la langue utilisée */
 	public Lang actuelle;
@@ -76,8 +71,8 @@ public class Dictionnaire {
 		while (opened.hasNextLine())
 		{
 			ligne=opened.nextLine();
-			p = Pattern.compile("[^a-z]");
-			m=p.matcher(ligne.toLowerCase());
+			Pattern p = Pattern.compile("[^a-z]");
+			Matcher m=p.matcher(ligne.toLowerCase());
 			if (m.find())
 			{
 				String modifiee = null;
@@ -157,20 +152,19 @@ public class Dictionnaire {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//Dictionnaire d = new Dictionnaire(Lang.FR);
-		Dictionnaire d2 = new Dictionnaire(Lang.EN);
+		Dictionnaire d = new Dictionnaire(Lang.FR);
+		//Dictionnaire d2 = new Dictionnaire(Lang.EN);
 		Boolean [] b = {new Boolean(false),new Boolean(false)};
 		String tab [] = {"assez","zimbabwe"};
-		//d.searchMot(tab,b);
+		d.searchMot(tab,b);
 		//d2.searchMot(tab, b2);
 		Sac s=new Sac();
-		try {
+		/**try {
 			d2.calcVal(s);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		b.toString();
 	}
-
 }

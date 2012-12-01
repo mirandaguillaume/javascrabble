@@ -14,7 +14,7 @@ public class Node {
 	/**
 	 *  Contient tous les fils du noeud courant
 	 */
-	private Node [] children;
+	GrowableNodeArray children;
 	
 	private boolean isMot;
 
@@ -25,7 +25,7 @@ public class Node {
 	 */
 	public Node(String s) {
 		this.mot=s;
-		this.children = null;
+		this.children = new GrowableNodeArray();
 		isMot=false;
 	}
 
@@ -35,11 +35,7 @@ public class Node {
 	
 	public int getNbChildren()
 	{
-		try {
-			return children.length;
-		} catch (NullPointerException e) {
-			return 0;
-		}
+		return children.length();
 	}
 	
 	public String getMot() {return mot;}
@@ -54,9 +50,10 @@ public class Node {
 		int ind = -1;
 		boolean find = false;
 		try {
-			for (int i=0;(i<children.length) && !find;i++)
+			for (int i=0;(i<children.length()) && !find;i++)
 			{
-				if(children[i].getMot().equals(s))
+				
+				if(children.getNode(i).getMot().equals(s))
 				{
 					ind = i;
 					find = true;
@@ -75,16 +72,7 @@ public class Node {
 	 */
 	public Node getChild(int i)
 	{
-		Node n = null;
-		try
-		{	 
-			n=children[i];
-		}
-		catch(NullPointerException | ArrayIndexOutOfBoundsException e)
-		{
-			n=new Node("\0");
-		}
-		return n;
+		return children.getNode(i);
 	}
 
 	/**
@@ -94,24 +82,8 @@ public class Node {
 	 */
 	public int addChild(String s)
 	{
-		Node [] aux;
-		int ind;
-		try
-		{
-			aux = new Node[children.length+1];
-			for (int i=0;i<children.length;i++)
-				aux[i]=children[i];
-			aux[children.length]=new Node(s);
-			ind=children.length;
-		}
-		catch(NullPointerException ex)
-		{
-			aux=new Node[1];
-			aux[0]=new Node(s);
-			ind=0;
-		}
-		children=aux;
-		return ind;
+		children.add(new Node(s));
+		return children.length()-1;
 	}
 	
 	/**

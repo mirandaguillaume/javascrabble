@@ -39,5 +39,6 @@ public class CalcVal {
 			s.add(n.getMot().charAt(ind),n.getNbChildren());
 		if (n.getIsMot())
 			s.add(n.getMot().charAt(ind),1);
+		
 	}
 }

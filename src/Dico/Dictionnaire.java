@@ -132,6 +132,7 @@ public class Dictionnaire {
 
 	}
 
+	@SuppressWarnings("null")
 	public boolean searchMot(String s)
 	{
 		Boolean b = null;
@@ -150,6 +151,18 @@ public class Dictionnaire {
 	{
 		CalcVal t = new CalcVal(liste.getRoot(),s,0);
 		t.run();
+	}
+	
+	public static void main (String [] args) {
+		Dictionnaire d = new Dictionnaire(Lang.FR);
+		Sac s = new Sac();
+		try {
+			d.calcVal(s);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		s.toString();
 	}
 	
 }

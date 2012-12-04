@@ -53,11 +53,23 @@ public class Jeton{
 		return score;
 	}
 	
+	public int getQuantite(){
+		return quantite;
+	}
+	
 	/**
 	 * quantite n'a volontairement pas d'accesseur.
 	 * la classe auto-g�re celle-ci
 	 * quantite est simplement utilis� dans prendre(int) : boolean
 	 */
+	
+	public void add(int occurrences){
+		quantite+=occurrences;
+	}
+	
+	public void add(Jeton other){
+		quantite+=other.quantite;
+	}
 	
 	/**
 	 * 

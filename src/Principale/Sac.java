@@ -1,4 +1,7 @@
 package Principale;
+
+import Dico.Dictionnaire.Lang;
+
 /**
  * Implémente le sac de jetons
  * @author guillaume
@@ -23,6 +26,26 @@ public class Sac {
 
 	public void add(char c,int occurrence) throws NullPointerException
 	{
-			Sac[((int)c)-97].add(occurrence);
+		Sac[((int)c)-97].add(occurrence);
+	}
+
+	public void setQuantiteScore(){
+		Jeton [] tab = new Jeton [Sac.length];
+		for (int i=0;i<Sac.length;i++)
+			tab[i]=Sac[i];
+		trieTab(tab);
+		
+	}
+
+	public void trieTab(Jeton t[])
+	{
+		for (int i=0 ;i<=(t.length-2);i++)
+			for (int j=(t.length-1);i < j;j--)
+				if (t[j].getQuantite() < t[j-1].getQuantite())
+				{
+					Jeton x=t[j-1];
+					t[j-1]=t[j];
+					t[j]=x;
+				}
 	}
 }

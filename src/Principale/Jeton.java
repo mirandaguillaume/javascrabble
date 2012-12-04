@@ -35,15 +35,6 @@ public class Jeton{
 		quantite=0;
 	}
 	
-	public void add (Jeton other)
-	{
-		quantite+=other.quantite;
-	}
-	
-	public void add(int occurrences)
-	{
-		quantite+=occurrences;
-	}
 	/**
 	 * accesseurs
 	 */

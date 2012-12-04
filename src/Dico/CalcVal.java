@@ -1,4 +1,6 @@
-package Principale;
+package Dico;
+
+import Principale.Sac;
 
 /**
  * Implémente le calcul des occurences en mode threadé

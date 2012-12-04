@@ -1,4 +1,7 @@
 package Principale;
+
+import Dico.Node;
+
 /**
  * Classe qui implémente le tableau dynamique de Node
  * @author guillaume

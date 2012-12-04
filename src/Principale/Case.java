@@ -1,6 +1,5 @@
 package Principale;
 
-
 /**
  * @author Cid's computer
  *
@@ -83,7 +82,8 @@ public class Case {
 	 * d�j� investie ou si le bonus � mal �t�
 	 * initialis�.
 	 * 
-	 * @throws GameException soit -1 ou 0
+	 * @throws GameException soit -1 si bug
+	 * ou 0 si la case est d�j� prise.
 	 *  
 	 */
 	public int placer(Jeton jeton) throws GameException{
@@ -93,9 +93,9 @@ public class Case {
 			jeton.prendre(1);
 			switch(bonus){
 			case lettrecomptedouble :
-				return pt=pt*2;
+				return pt*2;
 			case lettrecomptetriple :
-				return pt=pt*3;
+				return pt*3;
 			case motcomptedouble :
 			case motcomptetriple :
 			case none :

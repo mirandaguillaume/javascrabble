@@ -1,4 +1,7 @@
-package Principale;
+package Dico;
+
+import Principale.GrowableNodeArray;
+
 /**
  * Implémente le noeud de l'arbre du dictionnaire
  * @author guillaume

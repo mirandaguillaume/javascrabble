@@ -1,9 +1,13 @@
-package Principale;
+package Dico;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.regex.*;
+
+import Principale.Boolean;
+import Principale.Sac;
+import Principale.SearchMot;
 
 /**
  * Classe du dictionnaire de mots du jeu de scrabble
@@ -39,6 +43,10 @@ public class Dictionnaire {
 		init();
 	}
 
+	public Tree getListe() {
+		return liste;
+	}
+	
 	/** Fonction qui initialise le dictionnaire */
 	private void init() {
 		// TODO Auto-generated method stub
@@ -124,47 +132,24 @@ public class Dictionnaire {
 
 	}
 
-	public void searchMot(String [] s, Boolean [] b)
+	public boolean searchMot(String s)
 	{
-		Thread [] t = new Thread [s.length];
-		for (int i=0;i<s.length;i++)
-		{
-			t[i] = new Thread (new SearchMot(liste,s[i],b[i]));
-			t[i].start();
-		}
+		Boolean b = null;
+		Thread t = new Thread (new SearchMot(liste,s,b));
+		t.start();
 		try {
-			for (int i=0;i<t.length;i++)
-				t[i].join();
+				t.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return b.isB();
 	}
-
+	
 	public void calcVal (Sac s) throws InterruptedException
 	{
 		CalcVal t = new CalcVal(liste.getRoot(),s,0);
 		t.run();
 	}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Dictionnaire d = new Dictionnaire(Lang.FR);
-		//Dictionnaire d2 = new Dictionnaire(Lang.EN);
-		Boolean [] b = {new Boolean(false),new Boolean(false)};
-		String tab [] = {"assez","zimbabwe"};
-		d.searchMot(tab,b);
-		//d2.searchMot(tab, b2);
-		Sac s=new Sac();
-		/**try {
-			d2.calcVal(s);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		b.toString();
-	}
 }

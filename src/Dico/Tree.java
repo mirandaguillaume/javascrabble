@@ -1,4 +1,4 @@
-package Principale;
+package Dico;
 
 /**
  * Implémente l'arbre représentant le dictionnaire
@@ -51,6 +51,8 @@ public class Tree {
 				tmp=tmp.getChild(n);
 			else find=false;
 		}
+		if (!tmp.getIsMot()) 
+			find = false;
 		return find;
 	}
 

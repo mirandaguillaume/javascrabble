@@ -1,6 +1,6 @@
 package Dico;
 
-import Principale.GrowableNodeArray;
+import java.util.ArrayList;
 
 /**
  * Implémente le noeud de l'arbre du dictionnaire
@@ -17,8 +17,9 @@ public class Node {
 	/**
 	 *  Contient tous les fils du noeud courant
 	 */
-	GrowableNodeArray children;
+	ArrayList<Node> children;
 	
+	@SuppressWarnings("unused")
 	private boolean isMot;
 
 	private boolean ok;
@@ -28,7 +29,7 @@ public class Node {
 	 */
 	public Node(String s) {
 		this.mot=s;
-		this.children = new GrowableNodeArray();
+		this.children = new ArrayList<Node>();
 		isMot=false;
 	}
 
@@ -38,7 +39,7 @@ public class Node {
 	
 	public int getNbChildren()
 	{
-		return children.length();
+		return children.size();
 	}
 	
 	public String getMot() {return mot;}
@@ -53,10 +54,9 @@ public class Node {
 		int ind = -1;
 		boolean find = false;
 		try {
-			for (int i=0;(i<children.length()) && !find;i++)
+			for (int i=0;(i<children.size()) && !find;i++)
 			{
-				
-				if(children.getNode(i).getMot().equals(s))
+				if(children.get(i).getMot().equals(s))
 				{
 					ind = i;
 					find = true;
@@ -75,7 +75,7 @@ public class Node {
 	 */
 	public Node getChild(int i)
 	{
-		return children.getNode(i);
+		return children.get(i);
 	}
 
 	/**
@@ -85,8 +85,9 @@ public class Node {
 	 */
 	public int addChild(String s)
 	{
-		children.add(new Node(s));
-		return children.length()-1;
+		Node n = new Node(s);
+		children.add(n);
+		return children.lastIndexOf(n);
 	}
 	
 	/**

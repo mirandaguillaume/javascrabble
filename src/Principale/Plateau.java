@@ -42,6 +42,8 @@ public class Plateau {
 		}
 	}
 	
+	private final int taillePlateau=15;
+	private final int nbLettres=26;
 	private Case[][] plateau=null;
 	private Jeton [] disponible=null;
 	
@@ -50,18 +52,18 @@ public class Plateau {
 	 * n�cessaire donc disponible 
 	 */
 	public Plateau(){
-		plateau=new Case[15][15];
-		disponible=new Jeton[26];
+		plateau=new Case[taillePlateau][taillePlateau];
+		disponible=new Jeton[nbLettres];
 		
 		// Initialisation des jetons
-		for(int i=0; i<26; ++i)
+		for(int i=0; i<nbLettres; ++i)
 			disponible[i]=new Jeton((char)((int)'a'+i),1,10);
 		
 		// On doit tout dabord allouer toutes les cases
 		// Initialement, elles ne sont pas sp�cial
 		// n'ont pas de bonus
-		for(int i=0; i<15; ++i){
-			for(int j=0; j<15; ++j)
+		for(int i=0; i<taillePlateau; ++i){
+			for(int j=0; j<taillePlateau; ++j)
 				plateau[i][j]=new Case(Bonus.none);
 		}
 		
@@ -151,6 +153,17 @@ public class Plateau {
 		return disponible[i];
 	}
 	
+	public Case getCase (Coord c) {
+		return plateau[c.a][c.b];
+	}
+	
+	public int getTaillePlateau() {
+		return taillePlateau;
+	}
+	
+	public int getNbLettres() {
+		return nbLettres;
+	}
 	
 	private int bonusSurMot(int points, LinkedList<Bonus> bonus){
 		while(bonus.size()>0){
@@ -233,7 +246,7 @@ public class Plateau {
 	private int jouer_bas(String jetons, Coord coord){
 		int points_mot=0, other_mot=0;
 		LinkedList<Bonus> bonus=new LinkedList<Bonus>();
-		if(jetons.length()+coord.b<15){
+		if(jetons.length()+coord.b<taillePlateau){
 			for(int i=0; i<jetons.length(); ++i){
 				try{
 					// cet appel ne peut emmettre que 2 identifiant d'erreur
@@ -272,7 +285,7 @@ public class Plateau {
 	private int jouer_droite(String jetons, Coord coord){
 		int points_mot=0, other_mot=0;
 		LinkedList<Bonus> bonus=new LinkedList<Bonus>();
-		if(jetons.length()+coord.a<15)
+		if(jetons.length()+coord.a<taillePlateau)
 			for(int i=0; i<jetons.length(); ++i){
 				try{
 					// cet appel ne peut emmettre que 2 identifiant d'erreur 
@@ -332,7 +345,7 @@ public class Plateau {
 		if(i<=0) throw new GameException("appel de Plateau.piocher(i:int) avec i n�gatif");
 		int lettre=0;
 		while(i>0){ // d�cr�ment� 
-			lettre=(int)Math.random()%26;
+			lettre=(int)Math.random()%nbLettres;
 			try{
 				disponible[lettre].prendre((int)Math.random()%3);
 				// le d�cr�ment se fait ici !

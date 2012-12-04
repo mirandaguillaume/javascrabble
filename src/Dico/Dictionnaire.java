@@ -2,6 +2,8 @@ package Dico;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.*;
 
@@ -46,7 +48,7 @@ public class Dictionnaire {
 	public Tree getListe() {
 		return liste;
 	}
-	
+
 	/** Fonction qui initialise le dictionnaire */
 	private void init() {
 		// TODO Auto-generated method stub
@@ -80,19 +82,21 @@ public class Dictionnaire {
 		{
 			ligne=opened.nextLine();
 			Pattern p = Pattern.compile("[^a-z]");
-			Matcher m=p.matcher(ligne.toLowerCase());
+			Matcher m = p.matcher(ligne.toLowerCase());
 			if (m.find())
-			{
-				String modifiee = null;
-				char exception = m.group(0).charAt(0);
-				int exception_int = (int) exception;
-				deb = m.start(0);
-				modifiee=ligne.substring(0,deb);
-				modifiee+=normalise(exception_int);
-				if (deb+1!=ligne.length())
-					modifiee+=ligne.substring(deb+1);
-				ligne=modifiee;
-			}
+				do 
+				{
+					String modifiee = null;
+					char exception = m.group(0).charAt(0);
+					int exception_int = (int) exception;
+					deb = m.start(0);
+					modifiee=ligne.substring(0,deb);
+					modifiee+=normalise(exception_int);
+					if (deb+1!=ligne.length())
+						modifiee+=ligne.substring(deb+1);
+					ligne=modifiee;
+					m=p.matcher(ligne.toLowerCase());
+				} while (m.find());
 			if (ligne != null) {
 				liste.addMot(ligne.toLowerCase());
 			}
@@ -139,30 +143,30 @@ public class Dictionnaire {
 		Thread t = new Thread (new SearchMot(liste,s,b));
 		t.start();
 		try {
-				t.join();
+			t.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return b.isB();
 	}
-	
-	public void calcVal (Sac s) throws InterruptedException
+
+	public HashMap<Character,Integer> calcVal () throws InterruptedException
 	{
-		CalcVal t = new CalcVal(liste.getRoot(),s,0);
-		t.run();
+		CalcVal t = new CalcVal(liste.getRoot(),-1);
+		return t.run();
 	}
-	
+
 	public static void main (String [] args) {
 		Dictionnaire d = new Dictionnaire(Lang.FR);
 		Sac s = new Sac();
 		try {
-			d.calcVal(s);
+			d.calcVal();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		s.toString();
 	}
-	
+
 }

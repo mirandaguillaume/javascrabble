@@ -1,5 +1,7 @@
 package Principale;
 
+import java.util.ArrayList;
+
 public class VerticalSearch implements Runnable {
 
 	private Plateau p;
@@ -18,7 +20,7 @@ public class VerticalSearch implements Runnable {
 		// TODO Auto-generated method stub
 		String mot = "\0";
 		Character c;
-		GrowableThreadArray tab = new GrowableThreadArray();
+		ArrayList<Thread> tab = new ArrayList<Thread>();
 		for (int i=0;i<p.getTaillePlateau();i++)
 			for (int j=0;j<p.getTaillePlateau();j++) {
 				c = p.getCase(i,j).getJeton().getLettre();

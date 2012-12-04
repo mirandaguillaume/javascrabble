@@ -1,6 +1,7 @@
 package Principale;
 
 import Dico.Dictionnaire.Lang;
+import java.util.Map;
 
 /**
  * Implémente le sac de jetons
@@ -10,18 +11,20 @@ import Dico.Dictionnaire.Lang;
 public class Sac {
 
 	private Jeton []Sac; 
+	private Map<Jeton,Integer> SacMap;
 
 	public Sac() {
-		Sac = new Jeton [26];
 		// TODO Auto-generated constructor stub
-		for (int i=0;i<26;i++)
-			Sac[i]=new Jeton((char)(97+i),0,0);
+		for (int i=0;i<26;i++) {
+			Sac[i]=new Jeton((char)(97+i),0);
+			SacMap.put(new Jeton((char)(97+i),0), 0);
+		}
 	}
 
-	public void add(Sac other)
+	public void add(int index,int occurrences)
 	{
-		for (int i=0;i<26;i++)
-			Sac[i].add(other.Sac[i]);
+	int [] Sac = new int [nbLettres];
+	
 	}
 
 	public void add(char c,int occurrence) throws NullPointerException

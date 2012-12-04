@@ -1,5 +1,10 @@
 package Principale;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
+import Principale.Plateau.Coord;
+
 /**
  * Classe de l'IA du Scrabble
  * @author guillaume
@@ -17,7 +22,7 @@ public class IA extends Joueur {
 	public void jouer(Plateau p) {
 		boolean echange = false;
 		boolean joue = false;
-		Mot mot = new Mot();
+		Entry<Map<Jeton,Coord>,Integer> mot = new Mot();
 		while (!joue) {
 			mot = simulate(p);
 			if ((mot.getMot()==null) && !echange) {
@@ -31,20 +36,24 @@ public class IA extends Joueur {
 		}
 	}
 	
-	public Mot simulate(Plateau p) {
-		Mot motH,motV,motFinal;
-		Thread t1 = new Thread ( new VerticalParcours(p,motV,main));
-		Thread t2 = new Thread ( new HorizontalParcours(p,motH,main));
-		t1.start();
-		t2.start();
-		t1.join();
-		t2.join();
-		if (motH.getScore()<motV.getScore()) 
-			motFinal = motV; 
-		else 
-			motFinal = motH;
+	public Entry<Map<Jeton,Coord>,Integer> simulate(Plateau p) {
+		Entry<Map<Jeton,Coord>,Integer> motFinal = null;
+		Map<Jeton,Coord> list = parcours(p);
 		return motFinal;
+}
+	public Map<Jeton,Coord> parcours(Plateau p) {
+		Coord coord;
+		Map<Jeton,Coord> list;
+		for (int i=0;i<p.getTaillePlateau();i++)
+			for (int j=0;j<p.getTaillePlateau();j++) {
+				coord.a=i;
+				coord.b=j;
+				char c = p.getCase(coord).getJeton().getLettre()
+				if (c!='\0') {
+					list.add(p.getCase(coord).getJeton,coord);
+				}
 	}
 }
+
 
 

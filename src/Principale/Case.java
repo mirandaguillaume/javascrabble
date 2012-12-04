@@ -12,7 +12,8 @@ public class Case {
 	public enum Bonus{lettrecomptedouble, lettrecomptetriple, motcomptedouble, motcomptetriple, none };
 	
 	private char lettre;
-	private int pt; 
+	private int pt;
+	private Jeton j;
 	private Bonus bonus;
 
 	/**
@@ -23,6 +24,7 @@ public class Case {
 		this.bonus=bonus;
 		lettre='\0';
 		pt=0;
+		j=new Jeton();
 	}
 
 	/**
@@ -36,6 +38,7 @@ public class Case {
 		this.bonus=bonus;
 		lettre='\0';
 		pt=0;
+		j=new Jeton();
 	}
 	
 	/**
@@ -48,19 +51,19 @@ public class Case {
 	 */
 	
 	public char get_lettre(){
-		return lettre;
+		return Jeton.getLettre();
 	}
 	
 	public int get_pt(){
 		switch(bonus){
 		case lettrecomptedouble:
-			return pt*2;
+			return Jeton.getScore()*2;
 		case lettrecomptetriple:
-			return pt*3;
+			return Jeton.getScore()*3;
 		case motcomptedouble:
 		case motcomptetriple:
 		case none:
-			return pt;
+			return Jeton.getScore();
 		default:
 			throw new GameException("Bonus mal initialis�",new GameException("Le bonus initialis� est inconnu !"));
 		}
@@ -88,6 +91,7 @@ public class Case {
 	 */
 	public int placer(Jeton jeton) throws GameException{
 		if(lettre=='\0'){
+			j.set(lettre, score);
 			lettre=jeton.get_lettre();
 			pt=jeton.get_score();
 			jeton.prendre(1);

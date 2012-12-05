@@ -50,20 +50,24 @@ public class Case {
 	 * de la partie !
 	 */
 	
+	public Jeton getJeton() {
+		return j;
+	}
+	
 	public char get_lettre(){
-		return Jeton.getLettre();
+		return j.get_lettre();
 	}
 	
 	public int get_pt(){
 		switch(bonus){
 		case lettrecomptedouble:
-			return Jeton.getScore()*2;
+			return j.get_score()*2;
 		case lettrecomptetriple:
-			return Jeton.getScore()*3;
+			return j.get_score()*3;
 		case motcomptedouble:
 		case motcomptetriple:
 		case none:
-			return Jeton.getScore();
+			return j.get_score();
 		default:
 			throw new GameException("Bonus mal initialis�",new GameException("Le bonus initialis� est inconnu !"));
 		}
@@ -91,7 +95,7 @@ public class Case {
 	 */
 	public int placer(Jeton jeton) throws GameException{
 		if(lettre=='\0'){
-			j.set(lettre, score);
+			j=jeton;
 			lettre=jeton.get_lettre();
 			pt=jeton.get_score();
 			jeton.prendre(1);

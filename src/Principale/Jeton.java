@@ -52,6 +52,10 @@ public class Jeton{
 		return ((int)lettre)-((int)j.lettre);
 	}
 	
+	public boolean equals(Jeton j) {
+		return lettre==j.lettre;
+	}
+	
 	public String toString() {
 		return "Lettre:"+lettre+" Score :"+score;
 	}

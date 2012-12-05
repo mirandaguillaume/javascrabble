@@ -5,17 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.*;
-
-import Principale.Boolean;
-import Principale.Jeton;
 import Principale.Sac;
-import Principale.SearchMot;
-
 /**
  * Classe du dictionnaire de mots du jeu de scrabble
  * @author guillaume
@@ -161,18 +154,8 @@ public class Dictionnaire {
 	}
 
 	@SuppressWarnings("null")
-	public boolean searchMot(String s)
-	{
-		Boolean b = null;
-		Thread t = new Thread (new SearchMot(liste,s,b));
-		t.start();
-		try {
-			t.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return b.isB();
+	public boolean searchMot(String s) {
+		return liste.searchMot(s);
 	}
 
 	public HashMap<Character,Integer> calcVal ()

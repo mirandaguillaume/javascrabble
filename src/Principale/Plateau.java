@@ -1,7 +1,10 @@
 package Principale;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
+import Dico.Dictionnaire;
+import Dico.Dictionnaire.Lang;
 import Principale.Case;
 import Principale.Case.Bonus;
 
@@ -43,21 +46,20 @@ public class Plateau {
 	}
 	
 	private final int taillePlateau=15;
-	private final int nbLettres=26;
 	private Case[][] plateau=null;
-	private Jeton [] disponible=null;
+	private Sac s = null;
+	private Dictionnaire d = null;
 	
 	/**
 	 * Seul le constructeur sans param�tre est
 	 * n�cessaire donc disponible 
 	 */
-	public Plateau(){
+	public Plateau(Lang lang){
 		plateau=new Case[taillePlateau][taillePlateau];
-		disponible=new Jeton[nbLettres];
 		
-		// Initialisation des jetons
-		for(int i=0; i<nbLettres; ++i)
-			disponible[i]=new Jeton((char)((int)'a'+i),1,10);
+		Dictionnaire d = new Dictionnaire (lang);
+		s = new Sac(d);
+		
 		
 		// On doit tout dabord allouer toutes les cases
 		// Initialement, elles ne sont pas sp�cial
@@ -356,4 +358,13 @@ public class Plateau {
 		}
 		return ret;
 	}
+	
+	public Jeton[] piocherColl (int i) {
+		return s.piocher(i);
+	}
+	
+	public void defausser (Jeton [] defausse) {
+		s.remettre(defausse);
+	}
+	
 }

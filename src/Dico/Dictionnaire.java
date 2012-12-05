@@ -3,11 +3,16 @@ package Dico;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.*;
 
 import Principale.Boolean;
+import Principale.Jeton;
 import Principale.Sac;
 import Principale.SearchMot;
 
@@ -24,6 +29,13 @@ public class Dictionnaire {
 	final String dicoFR = "dico_francais.txt";
 	final String dicoEN = "english_dict.txt";
 
+	private final int tabFrByScore[][]={{1,10},{2,3},{3,3},{4,3},{8,2},{10,5}};
+	private final int tabEnByScore[][]={{1,10},{2,2},{3,4},{4,5},{5,1},{8,2},{10,2}};
+	private final int tabFrByQuantite[][]={{15,1},{9,1},{8,1},{6,6},{5,1},{3,2},{2,7},{1,7}};
+	private final int tabEnByQuantite[][]={{12,1},{9,2},{8,1},{6,3},{4,4},{3,1},{2,9},{1,5}};
+
+	private static int [][] tabByQuantite;
+	private static int [][] tabByScore;
 	/** Variable qui contient la langue utilisée */
 	public Lang actuelle;
 
@@ -45,6 +57,13 @@ public class Dictionnaire {
 		init();
 	}
 
+	public int [][] getTabByScore() {
+		return tabByScore;
+	}
+	
+	public int [][] getTabByQuantite() {
+		return tabByQuantite;
+	}
 	public Tree getListe() {
 		return liste;
 	}
@@ -56,8 +75,14 @@ public class Dictionnaire {
 		Scanner Opened =null;
 		switch (actuelle)
 		{
-		case FR : ToOpen=dicoFR;break;
-		case EN : ToOpen=dicoEN;break;
+		case FR : ToOpen=dicoFR;
+		tabByScore=tabFrByScore;
+		tabByQuantite=tabFrByQuantite;
+		break;
+		case EN : ToOpen=dicoEN;
+		tabByScore=tabEnByScore;
+		tabByQuantite=tabEnByQuantite;
+		break;
 		}
 		try {
 			Opened=new Scanner(new File(ToOpen));
@@ -66,7 +91,6 @@ public class Dictionnaire {
 			e.printStackTrace();
 		}
 		ReadDico(Opened);
-
 		Opened.close();
 	}
 
@@ -151,22 +175,106 @@ public class Dictionnaire {
 		return b.isB();
 	}
 
-	public HashMap<Character,Integer> calcVal () throws InterruptedException
+	public HashMap<Character,Integer> calcVal ()
 	{
-		CalcVal t = new CalcVal(liste.getRoot(),-1);
-		return t.run();
+		return calcValRecurs(liste.getRoot(),-1);
+	}
+
+	private HashMap<Character, Integer> calcValRecurs(Node n, int ind) {
+		// TODO Auto-generated method stub
+		HashMap<Character,Integer> finalList = new HashMap<Character,Integer>();
+		for (int i=0;i<n.getNbChildren();i++)
+		{
+			HashMap<Character,Integer> tmp=calcValRecurs(n.getChild(i),ind+1);
+			if (finalList.size()!=0)
+				finalList=fusion(finalList,tmp);
+			else 
+				finalList=tmp;
+			finalList.toString();
+		}
+		int newQuantite = n.getNbChildren();
+		if (n.getMot()!="\0") {
+			try {
+				char c = n.getMot().charAt(ind);
+				try {
+					newQuantite += finalList.get(c);
+				} catch (NullPointerException e) {
+					newQuantite = n.getNbChildren();
+				}
+				if (newQuantite==0)
+					newQuantite++;
+				finalList.put(c, newQuantite);
+			} catch (StringIndexOutOfBoundsException  e) {}
+		}
+		return finalList;
+	}
+
+	public HashMap<Character,Integer> fusion(HashMap<Character,Integer> firstList,HashMap<Character,Integer> secondList) throws NullPointerException {
+		Set<Character> setFirst= firstList.keySet();
+		Set<Character> setSecond= secondList.keySet();
+		HashSet<Character> intersection = new HashSet<Character>();
+		Iterator<Character> itFirst = setFirst.iterator();
+		Iterator<Character> itSecond = setSecond.iterator();
+		HashMap<Character,Integer> fusionne = new HashMap<Character,Integer>();
+		Character c = null;
+		if (itFirst.hasNext()) {
+			c=itFirst.next();
+			while (c!=null) {
+				if (setSecond.contains(c)) 
+					intersection.add(c);
+				if (itFirst.hasNext())
+					c=itFirst.next();
+				else break;
+			}
+		}
+		if (itSecond.hasNext()) {
+			c=itSecond.next();		
+			while (c!=null) {
+				if (setFirst.contains(c)) 
+					intersection.add(c);
+				if (itSecond.hasNext())
+					c=itSecond.next();
+				else break;
+			}
+		}
+		Iterator<Character> itIntersection = intersection.iterator();
+		if (itIntersection.hasNext()) {
+			c=itIntersection.next();
+			while (c!=null) {
+				fusionne.put(c,firstList.get(c)+secondList.get(c));
+				if (itIntersection.hasNext())
+					c=itIntersection.next();
+				else break;
+			}
+		}
+		itFirst = setFirst.iterator();
+		itSecond = setSecond.iterator();
+		if (itFirst.hasNext())
+			c=itFirst.next();
+		while (c!=null) {
+			if (!fusionne.containsKey(c))
+				fusionne.put(c,firstList.get(c));
+			if (itFirst.hasNext())
+				c=itFirst.next();
+			else break;
+		}
+		if (itSecond.hasNext())
+			c=itSecond.next();		
+		while (c!=null) {
+			if (!fusionne.containsKey(c))
+				fusionne.put(c,secondList.get(c));
+			if (itSecond.hasNext())
+				c=itSecond.next();
+			else break;
+		}
+		return fusionne;
 	}
 
 	public static void main (String [] args) {
-		Dictionnaire d = new Dictionnaire(Lang.FR);
+		Dictionnaire d1=new Dictionnaire(Lang.FR);
 		Sac s = new Sac();
-		try {
-			d.calcVal();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		s.setQuantiteScore(d1.calcVal(),d1.getTabByScore(),d1.getTabByQuantite());
 		s.toString();
+		
 	}
-
 }

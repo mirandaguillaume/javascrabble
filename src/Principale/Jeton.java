@@ -48,6 +48,14 @@ public class Jeton{
 		return score;
 	}
 	
+	public int compareTo(Jeton j) {
+		return ((int)lettre)-((int)j.lettre);
+	}
+	
+	public String toString() {
+		return "Lettre:"+lettre+" Score :"+score;
+	}
+	
 	/**
 	 * quantite n'a volontairement pas d'accesseur.
 	 * la classe auto-g�re celle-ci
@@ -58,11 +66,12 @@ public class Jeton{
 	 * 
 	 * @param quantite
 	 * @return la quantite restante
-	public int prendre(int quantite)throws GameException{
-		if(this.quantite-quantite>=0){
-			this.quantite=this.quantite-quantite;
-			return this.quantite;
-		}
-		else throw new GameException("ERREUR : Quantite de jeton demand� trop �lev�",new GameException("RAISON : tentative d'affectation n�gative � quantite dans la classe Jeton"));
-	}*/
+	 */
+	//public int prendre(int quantite)throws GameException{
+		//if(this.quantite-quantite>=0){
+			//this.quantite=this.quantite-quantite;
+			//return this.quantite;
+		//}
+		//else throw new GameException("ERREUR : Quantite de jeton demand� trop �lev�",new GameException("RAISON : tentative d'affectation n�gative � quantite dans la classe Jeton"));
+	//}
 }

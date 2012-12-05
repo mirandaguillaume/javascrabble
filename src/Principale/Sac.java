@@ -1,7 +1,15 @@
 package Principale;
 
 import Dico.Dictionnaire.Lang;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Implémente le sac de jetons
@@ -10,45 +18,36 @@ import java.util.Map;
  */
 public class Sac {
 
-	private Jeton []Sac; 
-	private Map<Jeton,Integer> SacMap;
+	private HashMap<Jeton,Integer> SacMap;
 
+	public final int nbLettres = 26;
+	
 	public Sac() {
 		// TODO Auto-generated constructor stub
-		for (int i=0;i<26;i++) {
-			Sac[i]=new Jeton((char)(97+i),0);
-			SacMap.put(new Jeton((char)(97+i),0), 0);
+		SacMap=new HashMap<Jeton,Integer>(26);
+	}
+
+	public void setQuantiteScore(HashMap<Character,Integer> list,int [][] tabByScore,int [][] tabByQuantite){
+		Set<Character> listCarac =	list.keySet();
+		ArrayList<Character> listJetonTrie = new ArrayList<Character>(listCarac);
+		CompareQuantite c = new CompareQuantite(list);
+		Collections.sort(listJetonTrie, c);
+		Character [] tmpTab = new Character [nbLettres];
+		tmpTab=listJetonTrie.toArray(tmpTab);
+		int cptScore = 0, cptQuantite = 0,indScore=0,indQuantite=0;
+		for (int i=0;i<listJetonTrie.size();i++) {
+			if (cptScore>=tabByScore[indScore][1]) {
+				cptScore=0;
+				indScore++;
+			}
+			if (cptQuantite>=tabByQuantite[indQuantite][1]) {
+				cptQuantite=0;
+				indQuantite++;
+			}
+			cptScore++;
+			cptQuantite++;
+			SacMap.put(new Jeton(tmpTab[i], tabByScore[indScore][0]),tabByQuantite[indQuantite][0]);
 		}
-	}
-
-	public void add(int index,int occurrences)
-	{
-	int [] Sac = new int [nbLettres];
-	
-	}
-
-	public void add(char c,int occurrence) throws NullPointerException
-	{
-		Sac[((int)c)-97].add(occurrence);
-	}
-
-	public void setQuantiteScore(){
-		Jeton [] tab = new Jeton [Sac.length];
-		for (int i=0;i<Sac.length;i++)
-			tab[i]=Sac[i];
-		trieTab(tab);
-		
-	}
-
-	public void trieTab(Jeton t[])
-	{
-		for (int i=0 ;i<=(t.length-2);i++)
-			for (int j=(t.length-1);i < j;j--)
-				if (t[j].getQuantite() < t[j-1].getQuantite())
-				{
-					Jeton x=t[j-1];
-					t[j-1]=t[j];
-					t[j]=x;
-				}
+			listJetonTrie.toString();
 	}
 }
